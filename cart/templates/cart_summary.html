@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+/* Dark theme cart styling */
+#cart-container {
+    background-color: #121212;
+    color: #e0e0e0;
+    padding: 2rem 1rem;
+    border-radius: 10px;
+}
+
+#cart-container .card {
+    background: rgba(30, 30, 30, 0.9);
+    border: 1px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#cart-container .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+#cart-container .card-title {
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: #ffffff;
+}
+
+#cart-container .card-text {
+    color: #bdbdbd;
+    font-size: 0.95rem;
+}
+
+#cart-container .strike-price {
+    text-decoration: line-through;
+    color: #888;
+}
+
+#cart-container .sale-price {
+    color: #76ff03;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+#cart-container .form-select {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    width: 80px;
+}
+
+#cart-container .form-select option {
+    background-color: #1e1e1e;
+    color: #fff;
+}
+
+#cart-container .btn {
+    border-radius: 20px;
+    padding: 0.4rem 1.2rem;
+    font-weight: 500;
+    margin: 0.3rem;
+    transition: background-color 0.3s ease;
+}
+
+#cart-container .btn-outline-secondary {
+    border: 1px solid #ccc;
+    color: #ccc;
+}
+
+#cart-container .btn-outline-secondary:hover {
+    background-color: #555;
+    color: white;
+}
+
+#cart-container .btn-outline-dark {
+    border: 1px solid #777;
+    color: #aaa;
+}
+
+#cart-container .btn-outline-dark:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+#cart-container .btn-outline-danger:hover {
+    background-color: #ff4444;
+    color: white;
+}
+
+#cart-container h3 {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#cart-container .no-cart {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+    padding: 4rem 0;
+}
+</style>
+
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Shopping Cart</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Your selected items</p>
+        </div>
+    </div>
+</header>
+
+<div class="container" id="cart-container">
+    {% if cart_products %}
+        {% for product in cart_products %}
+        <div class="card mb-4">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="Product image">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text mt-3">{{ product.description }}</p>
+
+                        {% if product.is_sale %}
+                            <div class="text-warning mb-2">🔥 On Sale</div>
+                            <div>
+                                <span class="strike-price">${{ product.price }}</span>
+                                <span class="sale-price ms-2">${{ product.sale_price }}</span>
+                            </div>
+                        {% else %}
+                            <div class="mb-2 fw-bold text-light">${{ product.price }}</div>
+                        {% endif %}
+
+                        <div class="row justify-content-center mt-4 mb-2">
+                            <div class="col-md-2 text-end">Qty:</div>
+                            <div class="col-md-3">
+                                <select class="form-select form-select-sm" id="select{{product.id}}">
+                                    {% for key, value in quantities.items %}
+                                        {% if key == product.id|slugify %}
+                                            <option selected>{{ value }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for i in "12345" %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary">Home</a>
+                        <button type="button" data-index="{{product.id}}" class="btn btn-outline-dark update-cart">Update</button>
+                        <button type="button" data-index="{{product.id}}" class="btn btn-outline-danger delete-product">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="text-end mt-4">
+            <h3>Total: ${{ totals }}</h3>
+            <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+        </div>
+    {% else %}
+        <div class="no-cart">🛒 Your cart is empty.</div>
+    {% endif %}
+</div>
+
+<!-- PAYMENT BOX SECTION -->
+<div class="payment-box-container">
+    <h3>Ready to Make a Payment?</h3>
+    <p>Click the button below to proceed to the secure payment page after your address have been sent to our database for delivery.</p>
+    <a href="{% url 'payment' %}" class="go-to-payment-btn-box">Go to Payment Page</a>
+</div>
+
+<style>
+.payment-box-container {
+    background-color: #1a1a1a;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 3rem auto;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    color: #eee;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.payment-box-container h3 {
+    color: #00cccc;
+    margin-bottom: 1rem;
+}
+
+.payment-box-container p {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.go-to-payment-btn-box {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #00cccc;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+    box-shadow: 0 0 10px rgba(0,255,255,0.3);
+}
+
+.go-to-payment-btn-box:hover {
+    background: #00aaaa;
+    box-shadow: 0 0 15px rgba(0,255,255,0.6);
+}
+</style>
+
+
+<script>
+// Update Cart
+$(document).on('click', '.update-cart', function(e){
+    e.preventDefault();
+    var productid = $(this).data('index');
+    $.ajax({
+        type: 'POST',
+        url: '{% url "cart_update" %}',
+        data: {
+            product_id: productid,
+            product_qty: $('#select' + productid + ' option:selected').text(),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+        },
+        success: function(json){
+            document.getElementById("cart_quantity").textContent = json.qty
+            location.reload();
+        }
+    });
+})
+
+// Delete Item From Cart
+$(document).on('click', '.delete-product', function(e){
+    e.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: '{% url "cart_delete" %}',
+        data: {
+            product_id: $(this).data('index'),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+        },
+        success: function(json){
+            location.reload();
+        }
+    });
+})
+</script>
+{% endblock %}

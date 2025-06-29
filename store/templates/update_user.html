@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/update_profile.css' %}">
+
+<!-- Header -->
+<header class="bg-black py-5 border-bottom border-secondary">
+    <div class="container text-center text-white">
+        <h1 class="display-5 fw-bold">Update Profile</h1>
+        <p class="lead text-white-50">Keep your profile information up to date</p>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div id="update-profile-page" class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="profile-card p-4 rounded shadow-sm">
+                <h4 class="text-center text-white mb-4">Profile Information</h4>
+                <form method="POST" action="{% url 'update_user' %}">
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+
+                    <div class="text-center mt-4 d-grid gap-2 d-md-flex justify-content-md-center">
+                        <button type="submit" class="btn btn-outline-light px-4 rounded-pill">Update</button>
+                        <a href="{% url 'update_password' %}" class="btn btn-outline-success px-4 rounded-pill">Change Password</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Apply dark background to whole body if not done globally */
+body {
+    background-color: #000 !important;
+    color: #fff;
+}
+
+/* Scoped wrapper */
+#update-profile-page {
+    background-color: #000;
+}
+
+/* Card styling */
+#update-profile-page .profile-card {
+    background: linear-gradient(145deg, #111 0%, #1a1a1a 100%);
+    border: 1px solid #2c2c2c;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+}
+
+/* Form fields */
+#update-profile-page input[type="text"],
+#update-profile-page input[type="email"],
+#update-profile-page input[type="password"],
+#update-profile-page textarea,
+#update-profile-page select {
+    background-color: #121212;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+#update-profile-page input:focus,
+#update-profile-page textarea:focus,
+#update-profile-page select:focus {
+    border-color: #0dcaf0;
+    background-color: #1e1e1e;
+    outline: none;
+}
+
+/* Button styling */
+#update-profile-page .btn-outline-light {
+    border: 2px solid #ccc;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+#update-profile-page .btn-outline-light:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+#update-profile-page .btn-outline-success {
+    border: 2px solid #0f0;
+    color: #0f0;
+}
+
+#update-profile-page .btn-outline-success:hover {
+    background-color: #0f0;
+    color: #000;
+}
+
+/* Headings */
+#update-profile-page h4 {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    #update-profile-page .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+</style>
+{% endblock %}

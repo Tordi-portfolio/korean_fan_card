@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/update_info.css' %}">
+
+<!-- Header -->
+<header class="bg-black py-5 border-bottom border-secondary">
+    <div class="container px-4 px-lg-5 my-5 text-center text-white">
+        <h1 class="display-4 fw-bolder">Update Information</h1>
+        <p class="lead text-white-50">Fill and update the delivery details below...</p>
+    </div>
+</header>
+
+<!-- Scoped Content -->
+<div id="update-info-page" class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="info-card p-4 rounded">
+                <h4 class="text-white text-center mb-4">Billing Information</h4>
+                <form method="POST" action="{% url 'update_info' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {{ shipping_form.as_p }}
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-outline-light px-4 py-2 rounded-pill">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+    background-color: #000 !important;
+    color: #fff;
+}
+
+/* Wrapper to scope styles */
+#update-info-page {
+    background-color: #000;
+}
+
+/* Info Card */
+#update-info-page .info-card {
+    background: linear-gradient(145deg, #111 0%, #1a1a1a 100%);
+    border: 1px solid #2a2a2a;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.03);
+}
+
+/* Headings */
+#update-info-page h4 {
+    font-weight: bold;
+}
+
+/* Form Inputs */
+#update-info-page input[type="text"],
+#update-info-page input[type="email"],
+#update-info-page input[type="number"],
+#update-info-page input[type="tel"],
+#update-info-page input[type="password"],
+#update-info-page textarea,
+#update-info-page select {
+    background-color: #121212;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#update-info-page input:focus,
+#update-info-page textarea:focus,
+#update-info-page select:focus {
+    border-color: #0dcaf0;
+    background-color: #1e1e1e;
+    outline: none;
+}
+
+/* Submit Button */
+#update-info-page .btn-outline-light {
+    border: 2px solid #ccc;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+#update-info-page .btn-outline-light:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #update-info-page .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+</style>
+{% endblock %}

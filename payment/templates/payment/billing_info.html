@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+/* Scoped Dark Theme Styling */
+#billing-wrapper {
+    background-color: #121212;
+    color: #e0e0e0;
+    padding: 2rem 1rem;
+}
+
+#billing-wrapper .card {
+    background-color: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+#billing-wrapper .card-header {
+    background-color: #212121;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #444;
+    color: #ffffff;
+}
+
+#billing-wrapper a.btn-outline-secondary {
+    border-color: #aaa;
+    color: #aaa;
+    transition: 0.3s;
+}
+
+#billing-wrapper a.btn-outline-secondary:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+#billing-wrapper .btn-secondary {
+    background-color: #444;
+    border: none;
+    transition: 0.3s;
+}
+
+#billing-wrapper .btn-secondary:hover {
+    background-color: #666;
+}
+
+/* Form Inputs - clearer text */
+#billing-wrapper input,
+#billing-wrapper select,
+#billing-wrapper textarea {
+    background-color: #222;
+    color: #f5f5f5;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+#billing-wrapper input::placeholder,
+#billing-wrapper textarea::placeholder {
+    color: #bbb;
+}
+
+#billing-wrapper label {
+    color: #f0f0f0;
+    font-weight: 500;
+}
+</style>
+
+
+<!-- Header -->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Billing Info</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Enter your payment info...</p>
+        </div>
+    </div>
+</header>
+
+<!-- Content -->
+<div class="container" id="billing-wrapper">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <!-- Order Summary -->
+            <div class="card mb-4">
+                <div class="card-header">Order Summary</div>
+                <div class="card-body">
+                    {% for product in cart_products %}
+                        <strong>{{ product.name }}</strong>:
+                        {% if product.is_sale %}
+                            <span class="text-success">${{ product.sale_price }}</span>
+                            <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
+                        {% else %}
+                            ${{ product.price }}
+                        {% endif %}
+                        <br>
+                        <small>
+                            Quantity:
+                            {% for key, value in quantities.items %}
+                                {% if key == product.id|slugify %}
+                                    {{ value }}
+                                {% endif %}
+                            {% endfor %}
+                        </small>
+                        <br><br>
+                    {% endfor %}
+                    <hr>
+                    <h5>Total: <span class="text-light">${{ totals }}</span></h5>
+                    <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary mt-2">Update Items</a>
+                </div>
+            </div>
+
+            <!-- Shipping Info -->
+            <div class="card mb-4">
+                <div class="card-header">Shipping Info</div>
+                <div class="card-body">
+                    {% csrf_token %}
+                    <p><strong>Name:</strong> {{ shipping_info.shipping_full_name }}</p>
+                    <p><strong>Email:</strong> {{ shipping_info.shipping_email }}</p>
+                    <p><strong>Address 1:</strong> {{ shipping_info.shipping_address1 }}</p>
+                    <p><strong>Address 2:</strong> {{ shipping_info.shipping_address2 }}</p>
+                    <p><strong>City:</strong> {{ shipping_info.shipping_city }}</p>
+                    <p><strong>State:</strong> {{ shipping_info.shipping_state }}</p>
+                    <p><strong>Zipcode:</strong> {{ shipping_info.shipping_zipcode }}</p>
+                    <p><strong>Country:</strong> {{ shipping_info.shipping_country }}</p>
+                    <a href="{% url 'checkout' %}" class="btn btn-outline-secondary mt-2">Update Shipping</a>
+                </div>
+            </div>
+
+            <!-- Billing Info -->
+            <div class="card">
+                <div class="card-header">Billing Info</div>
+                <div class="card-body">
+                    <form action="{% url 'process_order' %}" method="POST">
+                        {% csrf_token %}
+                        {{ billing_form.as_p }}
+                        <button type="submit" class="btn btn-secondary mt-3">Pay Now</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
