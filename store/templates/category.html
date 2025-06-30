@@ -93,4 +93,82 @@
         </div>
     </section>
 
+<style>
+    /* General Body Styling */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    /* Header */
+    header.bg-dark {
+        background: linear-gradient(to right, #343a40, #212529);
+    }
+
+    header .display-4 {
+        font-weight: 700;
+    }
+
+    /* Card */
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-img-top {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .card-body h5 {
+        font-size: 1.1rem;
+        color: #343a40;
+        margin-bottom: 0.75rem;
+    }
+
+    .card-body strike {
+        color: #dc3545;
+        margin-right: 5px;
+    }
+
+    .card-body .text-warning {
+        font-size: 0.875rem;
+    }
+
+    .card-footer {
+        background-color: transparent;
+    }
+
+    .btn-outline-dark {
+        border-radius: 30px;
+        font-size: 0.875rem;
+        padding: 10px 20px;
+    }
+
+    /* Responsive Fixes */
+    @media (max-width: 768px) {
+        .card-img-top {
+            height: 200px;
+        }
+
+        .card-body h5 {
+            font-size: 1rem;
+        }
+
+        .btn-outline-dark {
+            font-size: 0.75rem;
+            padding: 8px 16px;
+        }
+    }
+
+    </style>
+
 {% endblock %}
