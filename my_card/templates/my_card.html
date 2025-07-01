@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Scoped Styling -->
+<style>
+  .my-cards-page {
+    background-color: #2c2c2c;
+    padding: 60px 20px;
+    min-height: 100vh;
+  }
+
+  .my-cards-page .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 40px 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .my-cards-page h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #343a40;
+  }
+
+  .my-cards-page .btn-success {
+    padding: 10px 22px;
+    font-size: 1rem;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: 0.3s ease;
+  }
+
+  .my-cards-page .btn-success:hover {
+    background-color: #218838;
+  }
+
+  .my-cards-page .card {
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #ffffff;
+  }
+
+  .my-cards-page .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .my-cards-page .custom-card-img {
+    max-height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+  .my-cards-page .card-body {
+    padding: 20px;
+  }
+
+  .my-cards-page .card-text {
+    font-size: 1rem;
+    color: #495057;
+  }
+
+  .my-cards-page .card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 12px;
+    font-size: 0.9rem;
+    color: #6c757d;
+    text-align: center;
+  }
+
+  .my-cards-page .no-cards {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #f8f9fa;
+    margin-top: 30px;
+  }
+
+  /* MOBILE OVERRIDES */
+  @media (max-width: 768px) {
+    .my-cards-page .content-wrapper {
+      padding: 25px 15px;
+    }
+
+    .my-cards-page h2 {
+      font-size: 1.5rem;
+    }
+
+    .my-cards-page .custom-card-img {
+      max-height: 120px;
+    }
+
+    .my-cards-page .card-body {
+      padding: 15px;
+    }
+  }
+</style>
+
+<!-- Page Content -->
+<div class="my-cards-page">
+  <div class="content-wrapper">
+    <h2>My Uploaded Cards</h2>
+
+    {% if user.is_authenticated and user.is_superuser %}
+    <div class="text-center mb-4">
+      <a href="{% url 'create_card' %}" class="btn btn-success">
+        <i class="fas fa-upload"></i> Upload New Card
+      </a>
+    </div>
+    {% endif %}
+
+    {% if cards %}
+      <div class="row">
+        {% for card in cards %}
+          <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card h-100">
+              <img src="{{ card.image.url }}" class="card-img-top custom-card-img" alt="Card Image">
+              <div class="card-body">
+                <p class="card-text">{{ card.text }}</p>
+              </div>
+              <div class="card-footer">
+                Uploaded {{ card.uploaded_at|timesince }} ago
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="no-cards">You haven't uploaded any cards yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Font Awesome (for icons) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+{% endblock %}
