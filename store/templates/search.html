@@ -1,133 +1,153 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block content %}
-     <!-- Header-->
-     <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Search Product</h1>
-                <p class="lead fw-normal text-white-50 mb-0">Search For Any Celebrity Fan Crad here...</p>
-            </div>
-        </div>
-    </header>
-    <br><br>
 
-    <div class="container">
-        <div class="row">
-            <center>
-                <div class="col-8">
-                    <div class="card">
-                        <div class="card-header">
-                          Search Products
-                        </div>
-                        <div class="card-body">
-                            <form action="{% url 'search' %}" method="POST">
-                                {% csrf_token %}
+<!-- ✅ Embedded Professional CSS -->
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+  }
 
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search for products..." name="searched">
-                                  </div>
-                                  <!-- <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                  </div> -->
+  header.bg-dark {
+    background: linear-gradient(to right, #1e1e2f, #3a3a5d);
+  }
 
-                                  <button type="submit" class="btn btn-secondary">Search</button>
-                                  <br><br>
-                                  <strong class="btn btn-primary"><div class="container">
-                                    You can search for any celebrity fan card here
-                                  </div></strong>
-                            </form>
-                        </div>
-                      </div>
-                </div>
-            </center>
-        </div>
+  .card {
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .search-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  .search-box input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  .search-box button {
+    padding: 10px 30px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  .search-box button:hover {
+    background-color: #444;
+  }
+
+  .product-description {
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.4em 0.6em;
+  }
+
+  .card-footer a {
+    background-color: #1e1e2f;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+
+  .card-footer a:hover {
+    background-color: #3a3a5d;
+  }
+
+  .no-results {
+    background-color: #fff3cd;
+    padding: 1rem;
+    border-left: 4px solid #ffeeba;
+    border-radius: 8px;
+    color: #856404;
+    text-align: center;
+  }
+</style>
+
+<!-- ✅ Hero Banner -->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Search Fan Cards</h1>
+      <p class="lead fw-normal text-white-50 mb-0">Find your favorite celebrity fan cards</p>
     </div>
-    <br><br><br><br>
+  </div>
+</header>
 
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"></div>
-        {% if searched %}
-
-        {% for product in searched %}
-
-        {% if product.is_sale %}
-
-        <div class="col mb-5">
-            <div class="card h-100">
-                <!-- sale badge -->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Sale</div>
-                <!-- Product image-->
-                <img class="card-img-top" src="{{product.image.url}}" alt="..." />
-                <!-- Product details-->
-                <div class="card-body p-4">
-                    <div class="text-center">
-                        <!-- Product name-->
-                        <h5 class="fw-bolder">{{product.name}}</h5>
-
-                        <!-- Sale -->
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                            <div class="bi-star-fill"></div>
-                            &nbsp;&nbsp;Sale&nbsp;&nbsp;
-                            <div class="bi-star-fill"></div>
-                            </div>
-
-                        <!-- Product price-->
-                        <strike>
-                            #{{product.price}}
-                        </strike>
-                        #{{product.sale_price}}
-                        <br>
-                        &nbsp;
-                        {{product.description}}
-                        <br>
-                    </div>
-                </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' product.id %}">View Product</a></div>
-                </div>
-            </div>
-        </div>
-
-        {% else %}
-
-
-        <div class="col mb-5">
-            <div class="card h-100">
-                <!-- Product image-->
-                <img class="card-img-top" src="{{product.image.url}}" alt="..." />
-                <!-- Product details-->
-                <div class="card-body p-4">
-                    <div class="text-center">
-                        <!-- Product name-->
-                        <h5 class="fw-bolder">{{product.name}}</h5>
-                        <!-- Product price-->
-                        #{{product.price}}
-                        <br>
-                        {{product.description}}
-                        <br>
-                    </div>
-                </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' product.id %}">View Product</a></div>
-                </div>
-            </div>
-        </div>
-
-
-        {% endif %}
-
-        {% endfor %}
-
-    {% endif %}
+<!-- ✅ Search Form -->
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="search-box">
+        <form action="{% url 'search' %}" method="POST">
+          {% csrf_token %}
+          <input type="text" name="searched" class="form-control" placeholder="Search by celebrity or card name..." required>
+          <button type="submit" class="btn w-100 mt-3">Search</button>
+          <p class="text-muted mt-3">Tip: Try names like <em>Rihanna</em>, <em>BTS</em>, or <em>Messi</em>.</p>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
-    <br><br><br><br><br><b><br>
+<!-- ✅ Results Section -->
+<div class="container mb-5">
+  {% if searched %}
+    <div class="row gx-4 gy-5 row-cols-1 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      {% for product in searched %}
+        <div class="col">
+          <div class="card h-100">
+            {% if product.is_sale %}
+              <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Sale</div>
+            {% endif %}
+            <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 240px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+            <div class="card-body p-4 text-center">
+              <h5 class="fw-bolder">{{ product.name }}</h5>
+              {% if product.is_sale %}
+                <p>
+                  <strike class="text-muted">#{{ product.price }}</strike><br>
+                  <span class="text-success fw-bold">#{{ product.sale_price }}</span>
+                </p>
+              {% else %}
+                <p class="text-dark fw-semibold">#{{ product.price }}</p>
+              {% endif %}
+              <p class="product-description">{{ product.description|truncatewords:15 }}</p>
+            </div>
+            <div class="card-footer bg-transparent text-center">
+              <a href="{% url 'product' product.id %}" class="btn btn-outline-light">View Product</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="row">
+      <div class="col text-center mt-4">
+        <div class="no-results">
+          <h5>No Results Found</h5>
+          <p>Try using different keywords or check spelling.</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
 
-    </b>
 {% endblock %}
