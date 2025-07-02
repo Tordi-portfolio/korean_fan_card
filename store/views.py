@@ -30,7 +30,7 @@ def search(request):
         searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
 
         if not searched:
-            messages.success(request, ('This Product does not exists... Please try again...'))
+            messages.success(request, ('이 상품은 존재하지 않습니다... 다시 시도해 주세요...'))
             return render(request, 'search.html', {})
         else:
             return render(request, 'search.html', {'searched':searched})
@@ -51,11 +51,11 @@ def update_info(request):
         if form.is_valid():
             form.save(),
 
-            messages.success(request, ('Your info has been updated...'))
+            messages.success(request, ('회원 정보가 업데이트되었습니다...'))
             return redirect('home')
         return render(request, 'update_info.html', {'form':form, 'shipping_form':shipping_form})
     else:
-        messages.success(request, ('You Must Be Logged In To Acces This Page...'))
+        messages.success(request, ('이 페이지에 접근하려면 로그인해야 합니다...'))
         return redirect('home')
 
 
@@ -69,7 +69,7 @@ def update_password(request):
 
             if form.is_valid():
                 form.save()
-                messages.success(request, ('Your password has been updated... please login again...'))
+                messages.success(request, ('비밀번호가 변경되었습니다... 다시 로그인해 주세요...'))
                 login(request, current_user)
                 return redirect ('update_user')
             else:
@@ -81,7 +81,7 @@ def update_password(request):
             return render(request, 'update_password.html', {'form':form})
 
     else:
-        messages.success(request, ('You must be logged in to view that page...'))
+        messages.success(request, ('해당 페이지를 보려면 로그인해야 합니다...'))
         return redirect('home')
 
 def update_user(request):
@@ -94,11 +94,11 @@ def update_user(request):
             user_form.save(),
 
             login(request, current_user)
-            messages.success(request, ('Profile Has Been Updated...'))
+            messages.success(request, ('프로필이 업데이트되었습니다...'))
             return redirect('home')
         return render(request, 'update_user.html', {'user_form':user_form})
     else:
-        messages.success(request, ('You Must Be Logged In To Acces This Page...'))
+        messages.success(request, ('이 페이지에 접근하려면 로그인해야 합니다...'))
         return redirect('home')
 
 
@@ -135,10 +135,10 @@ def login_user(request):
                 for key, value in converted_cart.items():
                     cart.db_add(product=key, quantity=value)
 
-            messages.success(request, ('You have been logged in...'))
+            messages.success(request, ('로그인되었습니다...'))
             return redirect('home')
         else:
-            messages.success(request, ('Invalid crendentail... please try again...'))
+            messages.success(request, ('잘못된 자격 증명입니다... 다시 시도해주세요...'))
             return redirect('login')
 
     else:
@@ -157,10 +157,10 @@ def register_user(request):
             # Login The User
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, ('You have Registered successfully...'))
+            messages.success(request, ('성공적으로 회원가입 되었습니다...'))
             return redirect('login')
         else:
-            messages.success(request, ('Invalid credentials... please try again...'))
+            messages.success(request, ('잘못된 인증 정보입니다... 다시 시도해주세요...'))
             return redirect('register')
     else:
         return render(request, 'register.html', {'form':form})
@@ -169,7 +169,7 @@ def register_user(request):
 
 def logout_user(request):
     logout(request),
-    messages.success(request, ('You have been logged out...'))
+    messages.success(request, ('로그아웃되었습니다...'))
     return redirect('home')
 
 
@@ -190,7 +190,7 @@ def category(request,foo):
         return render(request, 'category.html', {'products':products, 'category': category})
 
     except:
-        messages.success(request, ('That category dosnt exist...'))
+        messages.success(request, ('해당 카테고리가 존재하지 않습니다...'))
         return redirect('home')
 
 

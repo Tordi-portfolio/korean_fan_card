@@ -88,7 +88,7 @@ def process_order(request):
             # delete shopping cart in database
             current_user.update(old_cart="")
 
-            messages.success(request, ('Order Placed...'))
+            messages.success(request, ('주문이 완료되었습니다...'))
             return redirect('home')
 
         else:
@@ -124,7 +124,7 @@ def process_order(request):
                         # delete the key
                         del request.session[key]
 
-            messages.success(request, ('Order Placed...'))
+            messages.success(request, ('주문이 완료되었습니다...'))
             return redirect('home')
 
     else:
@@ -181,12 +181,12 @@ def not_shipped_dash(request):
             # Update order
             order.update(shipped=True, date_shipped=now)
             # redirect
-            messages.success(request, ('Shipping Status Updated...'))
+            messages.success(request, ('배송 상태가 업데이트되었습니다...'))
             return redirect('not_shipped_dash')
 
         return render(request, 'payment/not_shipped_dash.html', {'orders':orders})
     else:
-        messages.success(request, ('Access Denied...'))
+        messages.success(request, ('접근 거부됨...'))
         return redirect('home')
     
 
@@ -205,11 +205,11 @@ def shipped_dash(request):
             # Update order
             orders.update(shipped=False)
             # redirect
-            messages.success(request, ('Shipping Status Updated...'))
+            messages.success(request, ('배송 상태가 업데이트되었습니다...'))
             return redirect('shipped_dash')
         return render(request, 'payment/shipped_dash.html', {'orders':orders})
     else:
-        messages.success(request, ('Access Denied...'))
+        messages.success(request, ('접근 거부됨...'))
         return redirect('home')
 
 
@@ -235,7 +235,7 @@ def orders(request, pk):
                 order = Order.objects.filter(id=pk)
                 # Update the status
                 order.update(shipped=False)
-            messages.success(request, ('Shipping Status Updated...'))
+            messages.success(request, ('배송 상태가 업데이트되었습니다...'))
             return redirect('home')
 
 
@@ -243,5 +243,5 @@ def orders(request, pk):
 
 
     else:
-        messages.success(request, ('Access Denied...'))
+        messages.success(request, ('접근 거부됨...'))
         return redirect('home')

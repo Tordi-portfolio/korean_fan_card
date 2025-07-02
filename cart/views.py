@@ -27,7 +27,7 @@ def cart_add(request):
 
         # response = JsonResponse({'qty': cart_quantity})
         response = JsonResponse({'qty':cart_quantity})
-        messages.success(request, ("Product successfully added to Cart..."))
+        messages.success(request, ("제품이 장바구니에 성공적으로 추가되었습니다..."))
         return response
 
 
@@ -41,7 +41,7 @@ def cart_update(request):
         cart.update(product=product_id, quantity=product_qty)
 
         response = JsonResponse({'qty':product_qty})
-        messages.success(request, ("Your Cart Has Been Updated..."))
+        messages.success(request, ("장바구니가 업데이트되었습니다..."))
         return response
         # return redirect('cart_summary')
 
@@ -57,7 +57,7 @@ def cart_delete(request):
         cart.delete(product=product_id)
 
         response = JsonResponse({'product':product_id})
-        messages.success(request, ("Your Cart Has Been Deleted..."))
+        messages.success(request, ("장바구니가 삭제되었습니다..."))
         return response
     
 
