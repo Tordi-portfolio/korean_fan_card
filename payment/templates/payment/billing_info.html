@@ -70,13 +70,12 @@
 }
 </style>
 
-
 <!-- Header -->
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Billing Info</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Enter your payment info...</p>
+            <h1 class="display-4 fw-bolder">결제 정보</h1>
+            <p class="lead fw-normal text-white-50 mb-0">결제 정보를 입력하세요...</p>
         </div>
     </div>
 </header>
@@ -88,7 +87,7 @@
 
             <!-- Order Summary -->
             <div class="card mb-4">
-                <div class="card-header">Order Summary</div>
+                <div class="card-header">주문 내역</div>
                 <div class="card-body">
                     {% for product in cart_products %}
                         <strong>{{ product.name }}</strong>:
@@ -100,7 +99,7 @@
                         {% endif %}
                         <br>
                         <small>
-                            Quantity:
+                            수량:
                             {% for key, value in quantities.items %}
                                 {% if key == product.id|slugify %}
                                     {{ value }}
@@ -110,36 +109,36 @@
                         <br><br>
                     {% endfor %}
                     <hr>
-                    <h5>Total: <span class="text-light">${{ totals }}</span></h5>
-                    <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary mt-2">Update Items</a>
+                    <h5>총 합계: <span class="text-light">${{ totals }}</span></h5>
+                    <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary mt-2">상품 수정</a>
                 </div>
             </div>
 
             <!-- Shipping Info -->
             <div class="card mb-4">
-                <div class="card-header">Shipping Info</div>
+                <div class="card-header">배송 정보</div>
                 <div class="card-body">
                     {% csrf_token %}
-                    <p><strong>Name:</strong> {{ shipping_info.shipping_full_name }}</p>
-                    <p><strong>Email:</strong> {{ shipping_info.shipping_email }}</p>
-                    <p><strong>Address 1:</strong> {{ shipping_info.shipping_address1 }}</p>
-                    <p><strong>Address 2:</strong> {{ shipping_info.shipping_address2 }}</p>
-                    <p><strong>City:</strong> {{ shipping_info.shipping_city }}</p>
-                    <p><strong>State:</strong> {{ shipping_info.shipping_state }}</p>
-                    <p><strong>Zipcode:</strong> {{ shipping_info.shipping_zipcode }}</p>
-                    <p><strong>Country:</strong> {{ shipping_info.shipping_country }}</p>
-                    <a href="{% url 'checkout' %}" class="btn btn-outline-secondary mt-2">Update Shipping</a>
+                    <p><strong>이름:</strong> {{ shipping_info.shipping_full_name }}</p>
+                    <p><strong>이메일:</strong> {{ shipping_info.shipping_email }}</p>
+                    <p><strong>주소 1:</strong> {{ shipping_info.shipping_address1 }}</p>
+                    <p><strong>주소 2:</strong> {{ shipping_info.shipping_address2 }}</p>
+                    <p><strong>도시:</strong> {{ shipping_info.shipping_city }}</p>
+                    <p><strong>주/도:</strong> {{ shipping_info.shipping_state }}</p>
+                    <p><strong>우편번호:</strong> {{ shipping_info.shipping_zipcode }}</p>
+                    <p><strong>국가:</strong> {{ shipping_info.shipping_country }}</p>
+                    <a href="{% url 'checkout' %}" class="btn btn-outline-secondary mt-2">배송 정보 수정</a>
                 </div>
             </div>
 
             <!-- Billing Info -->
             <div class="card">
-                <div class="card-header">Billing Info</div>
+                <div class="card-header">결제 정보</div>
                 <div class="card-body">
                     <form action="{% url 'process_order' %}" method="POST">
                         {% csrf_token %}
                         {{ billing_form.as_p }}
-                        <button type="submit" class="btn btn-secondary mt-3">Pay Now</button>
+                        <button type="submit" class="btn btn-secondary mt-3">지금 결제</button>
                     </form>
                 </div>
             </div>

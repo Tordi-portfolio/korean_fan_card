@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
 <!-- Header-->
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Processing Order</h1>
-            <p class="lead fw-normal text-white-50 mb-0">This is temporary...</p>
+            <h1 class="display-4 fw-bolder">주문 처리 중</h1>
+            <p class="lead fw-normal text-white-50 mb-0">잠시만 기다려 주세요...</p>
         </div>
     </div>
 </header>
@@ -20,7 +19,7 @@
         <div class="col-md-6 offset-md-3">
           <div class="card">
             <div class="card-header">
-              Order Summary
+              주문 내역
             </div>
             <div class="card-body">
               {% for product in cart_products %}
@@ -32,7 +31,7 @@
                 {% endif %}
                 <br>
                 <small>
-                Quantity:
+                수량:
                 {% for key, value in quantities.items %}
                   {% if key == product.id|slugify %}
                     <option selected>{{ value }}</option>
@@ -41,41 +40,41 @@
                 </small>
                 <br><br><br>
               {% endfor %}
-              Totals:  ${{ totals }}
+              총 합계:  ${{ totals }}
               <br><br>
-              <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary">Update Item</a>
+              <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary">상품 수정하기</a>
             </div>
           </div>
  
           <br><br>
           <div class="card">
             <div class="card-header">
-              Shipping Info
+              배송 정보
             </div>
             <div class="card-body">
                 {% csrf_token %}
-                Name: {{ shipping_info.shipping_full_name }} <br>
-                Email: {{ shipping_info.shipping_email }} <br>
-                Address 1: {{ shipping_info.shipping_address1 }} <br>
-                Address 2: {{ shipping_info.shipping_address2 }} <br>
-                City: {{ shipping_info.shipping_city }} <br>
-                State: {{ shipping_info.shipping_state }} <br>
-                Zipcode: {{ shipping_info.shipping_zipcode }} <br>
-                Country: {{ shipping_info.shipping_country }} <br> <br>
-                <a href="{% url 'checkout' %}" class="btn btn-outline-seconary">Update shipping</a>
+                이름: {{ shipping_info.shipping_full_name }} <br>
+                이메일: {{ shipping_info.shipping_email }} <br>
+                주소 1: {{ shipping_info.shipping_address1 }} <br>
+                주소 2: {{ shipping_info.shipping_address2 }} <br>
+                도시: {{ shipping_info.shipping_city }} <br>
+                주/도: {{ shipping_info.shipping_state }} <br>
+                우편번호: {{ shipping_info.shipping_zipcode }} <br>
+                국가: {{ shipping_info.shipping_country }} <br> <br>
+                <a href="{% url 'checkout' %}" class="btn btn-outline-secondary">배송 정보 수정</a>
             </div>
           </div>
           <br><br>
           
           <div class="card">
             <div class="card-header">
-              Billing Info
+              결제 정보
             </div>
             <div class="card-body">
               <form action="process_order" method="POST">
                 {% csrf_token %}
                 {{ billing_form.as_p }}
-                <button type="submit" class="btn btn-secondary">Pay Now</button>
+                <button type="submit" class="btn btn-secondary">지금 결제</button>
               </form>
             </div>
           </div>
@@ -86,5 +85,4 @@
 
 </div>
         
-
 {% endblock %}

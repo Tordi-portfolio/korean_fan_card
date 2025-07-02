@@ -106,8 +106,8 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Shopping Cart</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Your selected items</p>
+            <h1 class="display-4 fw-bolder">장바구니</h1>
+            <p class="lead fw-normal text-white-50 mb-0">선택한 상품들</p>
         </div>
     </div>
 </header>
@@ -118,7 +118,7 @@
         <div class="card mb-4">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="Product image">
+                    <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="상품 이미지">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body text-center">
@@ -126,7 +126,7 @@
                         <p class="card-text mt-3">{{ product.description }}</p>
 
                         {% if product.is_sale %}
-                            <div class="text-warning mb-2">🔥 On Sale</div>
+                            <div class="text-warning mb-2">🔥 세일 중</div>
                             <div>
                                 <span class="strike-price">${{ product.price }}</span>
                                 <span class="sale-price ms-2">${{ product.sale_price }}</span>
@@ -136,7 +136,7 @@
                         {% endif %}
 
                         <div class="row justify-content-center mt-4 mb-2">
-                            <div class="col-md-2 text-end">Qty:</div>
+                            <div class="col-md-2 text-end">수량:</div>
                             <div class="col-md-3">
                                 <select class="form-select form-select-sm" id="select{{product.id}}">
                                     {% for key, value in quantities.items %}
@@ -151,9 +151,9 @@
                             </div>
                         </div>
 
-                        <a href="{% url 'home' %}" class="btn btn-outline-secondary">Home</a>
-                        <button type="button" data-index="{{product.id}}" class="btn btn-outline-dark update-cart">Update</button>
-                        <button type="button" data-index="{{product.id}}" class="btn btn-outline-danger delete-product">Remove</button>
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary">홈으로</a>
+                        <button type="button" data-index="{{product.id}}" class="btn btn-outline-dark update-cart">수량 수정</button>
+                        <button type="button" data-index="{{product.id}}" class="btn btn-outline-danger delete-product">제거</button>
                     </div>
                 </div>
             </div>
@@ -161,19 +161,19 @@
         {% endfor %}
 
         <div class="text-end mt-4">
-            <h3>Total: ${{ totals }}</h3>
-            <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+            <h3>총합: ${{ totals }}</h3>
+            <a href="{% url 'checkout' %}" class="btn btn-success">결제 진행</a>
         </div>
     {% else %}
-        <div class="no-cart">🛒 Your cart is empty.</div>
+        <div class="no-cart">🛒 장바구니가 비어있습니다.</div>
     {% endif %}
 </div>
 
 <!-- PAYMENT BOX SECTION -->
 <div class="payment-box-container">
-    <h3>Ready to Make a Payment?</h3>
-    <p>Click the button below to proceed to the secure payment page after your address have been sent to our database for delivery.</p>
-    <a href="{% url 'payment' %}" class="go-to-payment-btn-box">Go to Payment Page</a>
+    <h3>결제 준비가 완료되었습니다</h3>
+    <p>배송을 위해 주소가 데이터베이스에 저장된 후 아래 버튼을 눌러 안전한 결제 페이지로 이동하세요.</p>
+    <a href="{% url 'payment' %}" class="go-to-payment-btn-box">결제 페이지로 이동</a>
 </div>
 
 <style>
@@ -217,7 +217,6 @@
     box-shadow: 0 0 15px rgba(0,255,255,0.6);
 }
 </style>
-
 
 <script>
 // Update Cart

@@ -66,8 +66,8 @@
 <header class="bg-dark py-5">
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-center text-white">
-      <h1 class="display-4 fw-bolder">Checkout</h1>
-      <p class="lead fw-normal text-white-50 mb-0">View Your Order...</p>
+      <h1 class="display-4 fw-bolder">결제하기</h1>
+      <p class="lead fw-normal text-white-50 mb-0">주문 내용을 확인하세요...</p>
     </div>
   </div>
 </header>
@@ -79,7 +79,7 @@
 
       <!-- Order Summary -->
       <div class="card mb-4">
-        <div class="card-header">Order Summary</div>
+        <div class="card-header">주문 내역</div>
         <div class="card-body">
           {% for product in cart_products %}
             <strong>{{ product.name }}</strong>:
@@ -91,7 +91,7 @@
             {% endif %}
             <br>
             <small class="text-muted">
-              Quantity:
+              수량:
               {% for key, value in quantities.items %}
                 {% if key == product.id|slugify %}
                   {{ value }}
@@ -101,19 +101,19 @@
             <br><br>
           {% endfor %}
           <hr>
-          <h5>Total: <span class="text-light">${{ totals }}</span></h5>
-          <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary mt-2">Update Items</a>
+          <h5>총 합계: <span class="text-light">${{ totals }}</span></h5>
+          <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary mt-2">상품 수정하기</a>
         </div>
       </div>
 
       <!-- Shipping Info -->
       <div class="card">
-        <div class="card-header">Shipping Info</div>
+        <div class="card-header">배송 정보</div>
         <div class="card-body">
           <form action="{% url 'billing_info' %}" method="POST">
             {% csrf_token %}
             {{ shipping_form.as_p }}
-            <button type="submit" class="btn btn-secondary mt-3">Continue To Billing</button>
+            <button type="submit" class="btn btn-secondary mt-3">결제 정보 입력으로 진행</button>
           </form>
         </div>
       </div>

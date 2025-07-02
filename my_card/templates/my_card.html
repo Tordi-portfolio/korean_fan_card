@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-{% block content %}
 
-<!-- Scoped Styling -->
+{% block content %}
 <style>
   .my-cards-page {
     background-color: #2c2c2c;
@@ -105,15 +104,14 @@
   }
 </style>
 
-<!-- Page Content -->
 <div class="my-cards-page">
   <div class="content-wrapper">
-    <h2>My Uploaded Cards</h2>
+    <h2>내가 업로드한 카드</h2>
 
     {% if user.is_authenticated and user.is_superuser %}
     <div class="text-center mb-4">
       <a href="{% url 'create_card' %}" class="btn btn-success">
-        <i class="fas fa-upload"></i> Upload New Card
+        <i class="fas fa-upload"></i> 새 카드 업로드
       </a>
     </div>
     {% endif %}
@@ -123,24 +121,23 @@
         {% for card in cards %}
           <div class="col-md-4 col-sm-6 mb-4">
             <div class="card h-100">
-              <img src="{{ card.image.url }}" class="card-img-top custom-card-img" alt="Card Image">
+              <img src="{{ card.image.url }}" class="card-img-top custom-card-img" alt="{{ card.text|default:'카드 이미지' }}">
               <div class="card-body">
                 <p class="card-text">{{ card.text }}</p>
               </div>
               <div class="card-footer">
-                Uploaded {{ card.uploaded_at|timesince }} ago
+                {{ card.uploaded_at|timesince }} 전 업로드됨
               </div>
             </div>
           </div>
         {% endfor %}
       </div>
     {% else %}
-      <p class="no-cards">You haven't uploaded any cards yet.</p>
+      <p class="no-cards">아직 업로드한 카드가 없습니다.</p>
     {% endif %}
   </div>
 </div>
 
-<!-- Font Awesome (for icons) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
 {% block content %}
@@ -17,6 +18,7 @@
   .card {
     border: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* added for badge positioning */
   }
 
   .card:hover {
@@ -86,8 +88,8 @@
 <header class="bg-dark py-5">
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-center text-white">
-      <h1 class="display-4 fw-bolder">Search Fan Cards</h1>
-      <p class="lead fw-normal text-white-50 mb-0">Find your favorite celebrity fan cards</p>
+      <h1 class="display-4 fw-bolder">팬 카드 검색</h1>
+      <p class="lead fw-normal text-white-50 mb-0">좋아하는 셀러브리티 팬 카드를 찾아보세요</p>
     </div>
   </div>
 </header>
@@ -99,9 +101,9 @@
       <div class="search-box">
         <form action="{% url 'search' %}" method="POST">
           {% csrf_token %}
-          <input type="text" name="searched" class="form-control" placeholder="Search by celebrity or card name..." required>
-          <button type="submit" class="btn w-100 mt-3">Search</button>
-          <p class="text-muted mt-3">Tip: Try names like <em>Rihanna</em>, <em>BTS</em>, or <em>Messi</em>.</p>
+          <input type="text" name="searched" class="form-control" placeholder="셀러브리티 또는 카드 이름으로 검색하세요..." required>
+          <button type="submit" class="btn w-100 mt-3">검색</button>
+          <p class="text-muted mt-3">팁: <em>리한나</em>, <em>BTS</em>, 또는 <em>메시</em> 같은 이름을 시도해 보세요.</p>
         </form>
       </div>
     </div>
@@ -116,23 +118,23 @@
         <div class="col">
           <div class="card h-100">
             {% if product.is_sale %}
-              <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Sale</div>
+              <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">세일</div>
             {% endif %}
             <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 240px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px;">
             <div class="card-body p-4 text-center">
               <h5 class="fw-bolder">{{ product.name }}</h5>
               {% if product.is_sale %}
                 <p>
-                  <strike class="text-muted">#{{ product.price }}</strike><br>
-                  <span class="text-success fw-bold">#{{ product.sale_price }}</span>
+                  <strike class="text-muted">₩{{ product.price }}</strike><br>
+                  <span class="text-success fw-bold">₩{{ product.sale_price }}</span>
                 </p>
               {% else %}
-                <p class="text-dark fw-semibold">#{{ product.price }}</p>
+                <p class="text-dark fw-semibold">₩{{ product.price }}</p>
               {% endif %}
               <p class="product-description">{{ product.description|truncatewords:15 }}</p>
             </div>
             <div class="card-footer bg-transparent text-center">
-              <a href="{% url 'product' product.id %}" class="btn btn-outline-light">View Product</a>
+              <a href="{% url 'product' product.id %}" class="btn btn-outline-light" aria-label="{{ product.name }} 자세히 보기">상품 보기</a>
             </div>
           </div>
         </div>
@@ -142,8 +144,8 @@
     <div class="row">
       <div class="col text-center mt-4">
         <div class="no-results">
-          <h5>No Results Found</h5>
-          <p>Try using different keywords or check spelling.</p>
+          <h5>검색 결과가 없습니다</h5>
+          <p>다른 키워드를 사용하거나 철자를 확인해 주세요.</p>
         </div>
       </div>
     </div>

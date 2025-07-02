@@ -7,8 +7,8 @@
      <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Orders</h1>
-                <p class="lead fw-normal text-white-50 mb-0">View your shipped items</p>
+                <h1 class="display-4 fw-bolder">주문 내역</h1>
+                <p class="lead fw-normal text-white-50 mb-0">배송된 상품을 확인하세요</p>
             </div>
         </div>
     </header>
@@ -20,34 +20,33 @@
                 <div class="col-8">
                     <div class="card">
                         <div class="card-header">
-                          Orders {{ order.id }} - ${{ order.amount_paid }}
+                          주문 번호 {{ order.id }} - 결제 금액 ${{ order.amount_paid }}
                         </div>
                         <div class="card-body">
-                            Email: {{ order.email }} <br>
+                            이메일: {{ order.email }} <br>
                             {% if order.date_shipped %}
-                            Date Shipped: {{ order.date_shipped }}
+                            배송일: {{ order.date_shipped }}
                             {% else %}
-                            Date Ordered: {{ order.date_ordered }}
+                            주문일: {{ order.date_ordered }}
                             {% endif %}
                             <br><br>
-                            {{ order.full_name }} <br>
-                            <pre>{{ order.shipping_address1 }}
-                            </pre>
+                            수령인: {{ order.full_name }} <br>
+                            <pre>{{ order.shipping_address1 }}</pre>
                             {% for item in items %}
-                                {{ item.product }} - {{ item.quantity }} - ${{ item.price } <br>
+                                {{ item.product }} - 수량: {{ item.quantity }} - 가격: ${{ item.price }}<br>
                             {% endfor %}
                             <br><br>
                             {% if not order.shipped %}
                             <form method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="shipping_status" value="true">
-                                <button type="submit" class="btn btn-secondary">Mark As Shipped</button>
+                                <button type="submit" class="btn btn-secondary">배송 완료 처리</button>
                             </form>
                             {% else %}
                             <form method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="shipping_status" value="false">
-                                <button type="submit" class="btn btn-danger">Mark As Not Shipped</button>
+                                <button type="submit" class="btn btn-danger">배송 미완료 처리</button>
                             </form>
                             {% endif %}
                         </div>
@@ -62,4 +61,3 @@
 
     <br><br>
 {% endblock %}
-

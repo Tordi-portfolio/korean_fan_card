@@ -7,8 +7,8 @@
 <!-- Header -->
 <header class="bg-black py-5 border-bottom border-secondary">
     <div class="container text-center text-white">
-        <h1 class="display-5 fw-bold">Update Profile</h1>
-        <p class="lead text-white-50">Keep your profile information up to date</p>
+        <h1 class="display-5 fw-bold">프로필 업데이트</h1>
+        <p class="lead text-white-50">프로필 정보를 최신 상태로 유지하세요</p>
     </div>
 </header>
 
@@ -17,14 +17,14 @@
     <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8">
             <div class="profile-card p-4 rounded shadow-sm">
-                <h4 class="text-center text-white mb-4">Profile Information</h4>
+                <h4 class="text-center text-white mb-4">프로필 정보</h4>
                 <form method="POST" action="{% url 'update_user' %}">
                     {% csrf_token %}
                     {{ user_form.as_p }}
 
                     <div class="text-center mt-4 d-grid gap-2 d-md-flex justify-content-md-center">
-                        <button type="submit" class="btn btn-outline-light px-4 rounded-pill">Update</button>
-                        <a href="{% url 'update_password' %}" class="btn btn-outline-success px-4 rounded-pill">Change Password</a>
+                        <button type="submit" class="btn btn-outline-light px-4 rounded-pill">업데이트</button>
+                        <a href="{% url 'update_password' %}" class="btn btn-outline-success px-4 rounded-pill">비밀번호 변경</a>
                     </div>
                 </form>
             </div>

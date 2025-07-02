@@ -84,3 +84,97 @@
         </div>
     </div>
 </nav>
+
+
+
+<!-- Navigation-->
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" href="#!"><strong>팬 카드 허브</strong></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">홈</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'search' %}">검색</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'my_card' %}">내 카드</a></li>
+
+          {% if user.is_superuser %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'create_card' %}">카드 생성</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">주문 관리</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'shipped_dash' %}">배송 완료</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="{% url 'not_shipped_dash' %}">배송 대기</a></li>
+                <li><hr class="dropdown-divider" /></li>
+              </ul>
+            </li>
+          {% endif %}
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">프로필</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'update_user' %}">프로필 수정</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="{% url 'update_info' %}">정보 수정</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="{% url 'founders' %}">관리자</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="{% url 'usage' %}">사용자 가이드</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="{% url 'home' %}">홈</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">로그아웃</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">로그인</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">회원가입</a></li>
+        {% endif %}
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">카테고리</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'category_summary' %}">전체 상품</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Keanu-Reeves' %}">키아누 리브스</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Tom-Holland' %}">톰 홀랜드</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Zendaya' %}">젠데이아</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Timothée-Chalamet' %}">티모시 샬라메</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Taylor-Swift' %}">테일러 스위프트</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Beyoncé' %}">비욘세</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Drake' %}">드레이크</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Bad-Bunny' %}">배드 버니</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Billie-Eilish' %}">빌리 아일리시</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Cristiano-Ronaldo' %}">크리스티아누 호날두</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Lionel-Messi' %}">리오넬 메시</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'LeBron-James' %}">르브론 제임스</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Kylian-Mbappé' %}">킬리안 음바페</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Serena-Williams' %}">세레나 윌리엄스</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Elon-Musk' %}">일론 머스크</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Kim-Kardashian' %}">킴 카다시안</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Rihanna' %}">리한나</a></li>
+            <li><a class="dropdown-item" href="{% url 'category' 'Kylie-Jenner' %}">카일리 제너</a></li>
+          </ul>
+        </li>
+      </ul>
+
+
+      <form class="d-flex">
+        <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark">
+          <i class="bi-cart-fill me-1"></i>
+          장바구니
+          <span id="cart_quantity" class="badge bg-dark text-white ms-1 rounded-pill">{{ cart|length }}</span>
+        </a>
+      </form>
+    </div>
+  </div>
+</nav> -->
